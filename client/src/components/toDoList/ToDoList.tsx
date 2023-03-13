@@ -99,9 +99,10 @@ const ToDoList = (props: ListProps) => {
 
   const addNewItem = () => {
     if (!newItem.description || !newItem.dueDate) return
-
     const newItemId = items.length + 1
     const newItemCategory = selectedCategories[0]
+    console.log('newItemCategory: ', newItemCategory)
+
     const newItems = [
       ...items,
       {
@@ -113,11 +114,18 @@ const ToDoList = (props: ListProps) => {
         dueDate: newItem.dueDate,
       },
     ]
-    const newItemToAdd = newItems[1]
-    console.log(newItems)
+    // const newItemToAdd = newItems[newItems.length - 1]
+    console.log('newItems: ', newItems)
     setNewItem({ description: '', dueDate: '' })
     props.setItems(newItems)
-    postRequestForNewItem(newItemToAdd)
+    const newItemWithoutId = {
+      priority: newItemId,
+      categoryId: newItemCategory.id,
+      description: newItem.description,
+      isDone: false,
+      dueDate: newItem.dueDate,
+    }
+    postRequestForNewItem(newItemWithoutId)
 
     setNewItem({ description: '', dueDate: '' })
 
@@ -136,7 +144,6 @@ const ToDoList = (props: ListProps) => {
   }
 
   const postRequestForNewItem = async (itemToAdd: object) => {
-    console.log('items: ', items)
     console.log('itemToAdd: ', itemToAdd)
     const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
     // 'https://todobackend20230309204702.azurewebsites.net/api/item'
@@ -163,8 +170,8 @@ const ToDoList = (props: ListProps) => {
         if (item.isDone) {
           return (
             <div
-              key={item.id}
-              id={item.id.toString()}
+              key={item.description}
+              // id={item.id.toString()}
               className="listItemClicked"
               ref={(ref) => {
                 if (ref === null) return
@@ -178,7 +185,7 @@ const ToDoList = (props: ListProps) => {
         } else {
           return (
             <div
-              key={item.id}
+              key={item.description}
               className="listItem"
               // id={item.id.toString()}
               ref={(ref) => {
