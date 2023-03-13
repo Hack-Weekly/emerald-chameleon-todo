@@ -101,6 +101,8 @@ const ToDoList = (props: ListProps) => {
     if (!newItem.description || !newItem.dueDate) return
     const newItemId = items.length + 1
     const newItemCategory = selectedCategories[0]
+    console.log('newItemCategory: ', newItemCategory)
+
     const newItems = [
       ...items,
       {
@@ -112,6 +114,20 @@ const ToDoList = (props: ListProps) => {
         dueDate: newItem.dueDate,
       },
     ]
+
+    // const newItemToAdd = newItems[newItems.length - 1]
+    console.log('newItems: ', newItems)
+    setNewItem({ description: '', dueDate: '' })
+    props.setItems(newItems)
+    const newItemWithoutId = {
+      priority: newItemId,
+      categoryId: newItemCategory.id,
+      description: newItem.description,
+      isDone: false,
+      dueDate: newItem.dueDate,
+    }
+    postRequestForNewItem(newItemWithoutId)
+
     setNewItem({ description: '', dueDate: '' })
     props.setItems(newItems)
     // const newItems = [...items, newItem]
@@ -129,6 +145,26 @@ const ToDoList = (props: ListProps) => {
     setNewItem({ description: '', dueDate: '' })
   }
 
+  const postRequestForNewItem = async (itemToAdd: object) => {
+    console.log('itemToAdd: ', itemToAdd)
+    const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
+    // 'https://todobackend20230309204702.azurewebsites.net/api/item'
+    try {
+      const response = await fetch(toDoListUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(itemToAdd),
+      })
+      if (!response.ok) {
+        console.log('error in post request')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const Items = () => {
     const categoryElement = selectedCategories.map((category) => {
       const elements = items.map((item) => {
@@ -136,8 +172,8 @@ const ToDoList = (props: ListProps) => {
         if (item.isDone) {
           return (
             <div
-              key={item.id}
-              id={item.id.toString()}
+              key={item.description}
+              // id={item.id.toString()}
               className="listItemClicked"
               ref={(ref) => {
                 if (ref === null) return

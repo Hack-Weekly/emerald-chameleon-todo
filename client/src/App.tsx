@@ -9,7 +9,7 @@ import Sidebar from './components/sidebar/Sidebar'
 
 import { useEffect } from 'react'
 import Navbar from './components/navbar/Navbar'
-const url = 'https://todobackend20230309204702.azurewebsites.net/api/'
+const url = ' https://nas.lightshowdepot.com/api/'
 
 //Test Data
 const test: Items[] = [
