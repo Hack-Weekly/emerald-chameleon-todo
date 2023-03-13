@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Categories } from '../../../types/data'
 import '../css/_sidebar.scss'
 import AddCategory from '../addCategory/AddCategory'
@@ -89,7 +89,7 @@ export default function Sidebar(props: SidebarProps) {
           )
         })}
       </div>
-      <AddCategory />
+      <AddCategory categories={categories} setCategories={setCategories} />
     </nav>
   )
 }

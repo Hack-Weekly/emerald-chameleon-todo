@@ -1,8 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
 import '../css/_addCategory.scss'
+import { Categories } from '../../../types/data'
 
-const AddCategory = () => {
+type AddCategoryProps = {
+  categories: Categories[]
+  setCategories: (value: Categories[]) => void
+}
+
+const AddCategory = (props: AddCategoryProps) => {
+  const { categories, setCategories } = props
+
   const [isClicked, setIsClicked] = useState(false)
   const [isExistingCategory, setIsExistingCategory] = useState(false)
   const [isOtherError, setIsOtherError] = useState(false)
@@ -69,6 +77,8 @@ const AddCategory = () => {
         setIsAddedToList(true)
         setIsExistingCategory(false)
         clearInput()
+        const data = await response.json()
+        setCategories([...categories, data])
       }
     } catch (error) {
       console.log(error)
