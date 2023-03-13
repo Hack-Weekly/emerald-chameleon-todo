@@ -14,7 +14,7 @@ type DeleteEntryProps<T extends Entry> = {
 
 export function DeleteEntry<T extends Entry>(props: DeleteEntryProps<T>) {
   const { id, entryType, entries, setEntries } = props
-  const url = 'https://nas.lightshowdepot.com/api'
+  const url = 'https://todobackend20230309204702.azurewebsites.net/api'
   const deleteRef = useRef<HTMLButtonElement>(null)
   const confirmRef = useRef<HTMLDivElement>(null)
 

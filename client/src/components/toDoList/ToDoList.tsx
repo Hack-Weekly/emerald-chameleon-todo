@@ -114,6 +114,7 @@ const ToDoList = (props: ListProps) => {
         dueDate: newItem.dueDate,
       },
     ]
+
     // const newItemToAdd = newItems[newItems.length - 1]
     console.log('newItems: ', newItems)
     setNewItem({ description: '', dueDate: '' })
@@ -128,7 +129,8 @@ const ToDoList = (props: ListProps) => {
     postRequestForNewItem(newItemWithoutId)
 
     setNewItem({ description: '', dueDate: '' })
-
+    props.setItems(newItems)
+    // const newItems = [...items, newItem]
     const newItemRef = ListItem.current[ListItem.current.length - 1]
     if (newItemRef) {
       newItemRef.addEventListener('click', () => {
@@ -187,7 +189,7 @@ const ToDoList = (props: ListProps) => {
             <div
               key={item.description}
               className="listItem"
-              // id={item.id.toString()}
+              id={item.id.toString()}
               ref={(ref) => {
                 if (ref === null) return
                 ListItem.current.push(ref)
