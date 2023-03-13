@@ -99,21 +99,34 @@ const ToDoList = (props: ListProps) => {
 
   const addNewItem = () => {
     if (!newItem.description || !newItem.dueDate) return
-    const newItemId = items.length + 1
+    // <<<<< Existing Code
+    // const newItemId = items.length + 1
+    // const newItemCategory = selectedCategories[0]
+    // const newItems = [
+    //   ...items,
+    //   {
+    //     id: newItemId,
+    //     priority: newItemId,
+    //     categoryId: newItemCategory.id,
+    //     description: newItem.description,
+    //     isDone: false,
+    //     dueDate: newItem.dueDate,
+    //   },
+    // ]
+    //  >>>>>>>>
+    
     const newItemCategory = selectedCategories[0]
-    const newItems = [
-      ...items,
-      {
-        id: newItemId,
-        priority: newItemId,
-        categoryId: newItemCategory.id,
-        description: newItem.description,
-        isDone: false,
-        dueDate: newItem.dueDate,
-      },
-    ]
+    const newItemToAdd = {
+      priority: ' ',
+      categoryId: newItemCategory.id,
+      description: newItem.description,
+      isDone: false,
+      dueDate: newItem.dueDate,
+    }
+    postRequestForNewItem(newItemToAdd)
+    console.log(newItemToAdd)
     setNewItem({ description: '', dueDate: '' })
-    props.setItems(newItems)
+    // props.setItems(newItems)
     // const newItems = [...items, newItem]
     const newItemRef = ListItem.current[ListItem.current.length - 1]
     if (newItemRef) {
@@ -127,6 +140,25 @@ const ToDoList = (props: ListProps) => {
       })
     }
     setNewItem({ description: '', dueDate: '' })
+  }
+
+  const postRequestForNewItem = async (itemToAdd: object) => {
+    const toDoListUrl =
+      'https://todobackend20230309204702.azurewebsites.net/api/item'
+    try {
+      const response = await fetch(toDoListUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(itemToAdd),
+      })
+      if (!response.ok) {
+        console.log('error in post request')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const Items = () => {
