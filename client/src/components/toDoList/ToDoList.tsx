@@ -82,7 +82,18 @@ const ToDoList = (props: ListProps) => {
 
   const Items = () => {
     const categoryElement = selectedCategories.map((category) => {
-      const elements = items.map((item) => {
+      
+      // convert dueDate string to yyyymmdd format
+      const itemDatesStringToNumber = items.map((item) => {
+        const formattedDate = item.dueDate.slice(0, 10).split('-').join('')
+        return { ...item, formattedDate }
+      })
+
+      const sortedItemsByDueDate = itemDatesStringToNumber.sort(
+        (objA, objB) => Number(objA.formattedDate) - Number(objB.formattedDate)
+      )
+
+      const elements = sortedItemsByDueDate.map((item) => {
         if (item.categoryId !== category.id) return
         if (item.isDone) {
           return (
