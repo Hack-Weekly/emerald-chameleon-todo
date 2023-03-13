@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './css/App.scss'
+import './App.scss'
 import type { Categories, Items } from '../types/data'
 import './components/sidebar/Sidebar'
 
