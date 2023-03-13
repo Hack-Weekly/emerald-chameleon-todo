@@ -50,6 +50,10 @@
   background-color: v.$neutral-200;
 }
 
+.category-item-container {
+  position: relative;
+}
+
 .active {
   background-color: v.$neutral-300;
 }

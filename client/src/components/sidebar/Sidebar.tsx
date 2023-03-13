@@ -1,19 +1,22 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Categories } from '../../../types/data'
 import '../css/_sidebar.scss'
 import AddCategory from '../addCategory/AddCategory'
-
-// const dbstring = 'https://dummyjson.com/products/categories'
+import { DeleteEntry } from '../deleteItem/DeleteEntry'
 
 type SidebarProps = {
   selectedCategories: Categories[]
   setSelectedCategories: (value: Categories[]) => void
   categories: Categories[]
+  setCategories: (value: Categories[]) => void
 }
 
 export default function Sidebar(props: SidebarProps) {
-  const { selectedCategories, setSelectedCategories, categories } = props
+  const { selectedCategories, setSelectedCategories, categories, setCategories } =
+    props
   const allButtonRef = useRef<HTMLButtonElement>(null)
+  const categoryUrl =
+    'https://todobackend20230309204702.azurewebsites.net/api/category'
 
   function addActiveClass(target: HTMLElement) {
     target.classList.add('active')
@@ -25,16 +28,17 @@ export default function Sidebar(props: SidebarProps) {
 
   function filterCategories(e: React.MouseEvent<HTMLButtonElement>) {
     const target = e.target as HTMLButtonElement
+    const targetCategoryId = Number(target.id.split('-')[1])
     if (target.classList.contains('active')) {
       removeActiveClass(target)
       const newCategories = selectedCategories.filter(
-        (cat) => cat.name !== target.id
+        (cat) => cat.id !== targetCategoryId
       )
       setSelectedCategories(newCategories)
     } else {
       addActiveClass(target)
       const newCategories = selectedCategories.concat(
-        categories.filter((cat) => cat.name === target.id)
+        categories.filter((cat) => cat.id === targetCategoryId)
       )
       setSelectedCategories(newCategories)
     }
@@ -63,23 +67,29 @@ export default function Sidebar(props: SidebarProps) {
         >
           All
         </button>
-        {categories.map((cat, i) => {
-          if (i < 10)
-            return (
+        {categories.map((cat) => {
+          return (
+            <div className="category-item-container" key={cat.name}>
               <button
-                key={cat.name}
                 className={`category-sidebar ${
                   selectedCategories.includes(cat) ? 'active' : ''
                 }`}
                 onClick={filterCategories}
-                id={cat.name}
+                id={`${cat.name}-${cat.id}`}
               >
                 {cat.name}
               </button>
-            )
+              <DeleteEntry
+                id={cat.id}
+                entryType="category"
+                entries={categories}
+                setEntries={setCategories}
+              />
+            </div>
+          )
         })}
       </div>
-      <AddCategory />
+      <AddCategory categories={categories} setCategories={setCategories} />
     </nav>
   )
 }

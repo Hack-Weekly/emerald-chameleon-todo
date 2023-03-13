@@ -1,0 +1,47 @@
+.delete-button {
+  color: #c93014;
+  position: absolute;
+  right: 1em;
+  top: 1.2em;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  img {
+    height: 1em;
+    position: absolute;
+    inset: 0;
+    &:hover {
+      filter: invert(23%) sepia(87%) saturate(2674%) hue-rotate(356deg)
+        brightness(82%) contrast(91%);
+    }
+  }
+}
+
+.confirm-delete {
+  position: absolute;
+  right: 0.5em;
+  top: 0.8em;
+
+  .confirm,
+  .cancel {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .confirm {
+    margin-right: 0.5em;
+  }
+  img {
+    height: 1.5em;
+  }
+}
+
+img {
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.3);
+  }
+}
