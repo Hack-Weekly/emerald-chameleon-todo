@@ -15,7 +15,8 @@ type DeleteEntryProps<T extends Entry> = {
 export function DeleteEntry<T extends Entry>(props: DeleteEntryProps<T>) {
   const { id, entryType, entries, setEntries } = props
   const url = 'https://todobackend20230309204702.azurewebsites.net/api'
-  const deleteRef = useRef(null)
+  const deleteRef = useRef<HTMLButtonElement>(null)
+  const confirmRef = useRef<HTMLDivElement>(null)
 
   function deleteEntry() {
     try {
@@ -30,14 +31,29 @@ export function DeleteEntry<T extends Entry>(props: DeleteEntryProps<T>) {
     }
   }
 
+  function toggleConfirmDelete() {
+    deleteRef.current?.classList.toggle('hidden')
+    confirmRef.current?.classList.toggle('hidden')
+  }
+
   return (
-    <button
-      className="delete-button"
-      onClick={deleteEntry}
-      id={`delete-${entryType}-${id}`}
-      ref={deleteRef}
-    >
-      <img src="/icons/trashcan.svg" className="trashcan" />
-    </button>
+    <>
+      <button
+        className="delete-button"
+        onClick={toggleConfirmDelete}
+        id={`delete-${entryType}-${id}`}
+        ref={deleteRef}
+      >
+        <img src="/icons/trashcan.svg" className="trashcan" />
+      </button>
+      <div className="confirm-delete hidden" ref={confirmRef}>
+        <button className="confirm" onClick={deleteEntry}>
+          <img src="/icons/checkmark.svg" className="checkmark" />
+        </button>
+        <button className="cancel" onClick={toggleConfirmDelete}>
+          <img src="/icons/cancel.svg" className="cancelmark" />
+        </button>
+      </div>
+    </>
   )
 }
