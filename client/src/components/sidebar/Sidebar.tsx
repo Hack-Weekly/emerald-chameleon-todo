@@ -15,8 +15,7 @@ export default function Sidebar(props: SidebarProps) {
   const { selectedCategories, setSelectedCategories, categories, setCategories } =
     props
   const allButtonRef = useRef<HTMLButtonElement>(null)
-  const categoryUrl =
-    'https://todobackend20230309204702.azurewebsites.net/api/category'
+  const categoryUrl = 'https://nas.lightshowdepot.com/api/category'
 
   function addActiveClass(target: HTMLElement) {
     target.classList.add('active')

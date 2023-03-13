@@ -99,22 +99,38 @@ const ToDoList = (props: ListProps) => {
 
   const addNewItem = () => {
     if (!newItem.description || !newItem.dueDate) return
-    const newItemId = items.length + 1
-    const newItemCategory = selectedCategories[0]
-    const newItems = [
-      ...items,
-      {
-        id: newItemId,
-        priority: newItemId,
-        categoryId: newItemCategory.id,
-        description: newItem.description,
-        isDone: false,
-        dueDate: newItem.dueDate,
-      },
-    ]
-    setNewItem({ description: '', dueDate: '' })
-    props.setItems(newItems)
+    // <<<<< Existing Code
+    // const newItemId = items.length + 1
+    // const newItemCategory = selectedCategories[0]
+    // const newItems = [
+    //   ...items,
+    //   {
+    //     id: newItemId,
+    //     priority: newItemId,
+    //     categoryId: newItemCategory.id,
+    //     description: newItem.description,
+    //     isDone: false,
+    //     dueDate: newItem.dueDate,
+    //   },
+    // ]
+    // setNewItem({ description: '', dueDate: '' })
+    // props.setItems(newItems)
     // const newItems = [...items, newItem]
+    //  >>>>>>>>
+
+    const newItemCategory = selectedCategories[0]
+    const newItemToAdd = {
+      priority: ' ',
+      categoryId: newItemCategory.id,
+      description: newItem.description,
+      isDone: false,
+      dueDate: newItem.dueDate,
+    }
+
+    postRequestForNewItem(newItemToAdd)
+    props.setItems([...items, newItemToAdd])
+    setNewItem({ description: '', dueDate: '' })
+
     const newItemRef = ListItem.current[ListItem.current.length - 1]
     if (newItemRef) {
       newItemRef.addEventListener('click', () => {
@@ -127,6 +143,26 @@ const ToDoList = (props: ListProps) => {
       })
     }
     setNewItem({ description: '', dueDate: '' })
+  }
+
+  const postRequestForNewItem = async (itemToAdd: object) => {
+    console.log(items)
+    const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
+    // 'https://todobackend20230309204702.azurewebsites.net/api/item'
+    try {
+      const response = await fetch(toDoListUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(itemToAdd),
+      })
+      if (!response.ok) {
+        console.log('error in post request')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const Items = () => {
@@ -151,9 +187,9 @@ const ToDoList = (props: ListProps) => {
         } else {
           return (
             <div
-              key={item.description}
+              key={item.id}
               className="listItem"
-              id={item.id.toString()}
+              // id={item.id.toString()}
               ref={(ref) => {
                 if (ref === null) return
                 ListItem.current.push(ref)
