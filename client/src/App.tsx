@@ -80,6 +80,7 @@ function App() {
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
           categories={categories}
+          setCategories={setCategories}
         />
         <div className={'counter'}>
           <ToDoList selectedCategories={selectedCategories} items={items} />
