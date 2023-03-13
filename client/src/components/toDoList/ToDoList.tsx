@@ -21,6 +21,7 @@ const ToDoList = (props: ListProps) => {
   const ListItem = useRef<HTMLElement[]>([])
   const [newItem, setNewItem] = useState<NewItem>({ description: '', dueDate: '' })
 
+
   const UpdateStatus = async (element: HTMLElement) => {
     const item = items.find((item) => {
       const elementKey = element.getAttribute('id')
@@ -114,7 +115,7 @@ const ToDoList = (props: ListProps) => {
     //   },
     // ]
     //  >>>>>>>>
-    
+
     const newItemCategory = selectedCategories[0]
     const newItemToAdd = {
       priority: ' ',
@@ -123,8 +124,9 @@ const ToDoList = (props: ListProps) => {
       isDone: false,
       dueDate: newItem.dueDate,
     }
+
     postRequestForNewItem(newItemToAdd)
-    console.log(newItemToAdd)
+    props.setItems([...items, newItemToAdd])
     setNewItem({ description: '', dueDate: '' })
     // props.setItems(newItems)
     // const newItems = [...items, newItem]
@@ -143,6 +145,7 @@ const ToDoList = (props: ListProps) => {
   }
 
   const postRequestForNewItem = async (itemToAdd: object) => {
+    console.log(items)
     const toDoListUrl =
       'https://todobackend20230309204702.azurewebsites.net/api/item'
     try {
@@ -185,7 +188,7 @@ const ToDoList = (props: ListProps) => {
             <div
               key={item.description}
               className="listItem"
-              id={item.id.toString()}
+              // id={item.id.toString()}
               ref={(ref) => {
                 if (ref === null) return
                 ListItem.current.push(ref)
