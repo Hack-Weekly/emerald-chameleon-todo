@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.scss'
+import './css/App.scss'
 import type { Categories, Items } from '../types/data'
 import './components/sidebar/Sidebar'
 
@@ -8,6 +8,7 @@ import ToDoList from './components/toDoList/ToDoList'
 import Sidebar from './components/sidebar/Sidebar'
 
 import { useEffect } from 'react'
+import Navbar from './components/navbar/Navbar'
 const url = 'https://todobackend20230309204702.azurewebsites.net/api/'
 
 //Test Data
@@ -72,17 +73,20 @@ function App() {
 
   return (
     <div className={'main'}>
-      <div className={'header'}>
-        <h1>Emerald Chameleons</h1>
-      </div>
-      <div className={'content'}>
+      <Navbar />
+
+      <div className={'page-wrapper'}>
         <Sidebar
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
           categories={categories}
         />
-        <div className={'counter'}>
-          <ToDoList selectedCategories={selectedCategories} items={items} />
+        <div className={'todo-list-wrapper'}>
+          <ToDoList 
+            selectedCategories={selectedCategories}
+            items={items}
+            setItems={setItems}
+          />
         </div>
         {/* <div className={'add-category-wrapper'}>
           <AddCategory />

@@ -1,0 +1,110 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #50C878;
+    font-size: 42px;
+}
+
+.header-wrapper {
+  // Header container
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #1d1d1d;
+    padding: 0 20px;
+}
+
+.logo-wrapper {
+    width: 50px;
+    height: 50px;
+}
+
+
+.header-content-left {
+  // keep logo and h1 to left
+    display: flex;
+    align-items: center;
+}
+
+.title-wrapper {
+    margin-left: 12px;
+}
+
+/* Vertical Dots Dropdown menu for Sorting By Date */
+button.dots {
+    width: 50px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    margin: 42px;
+    &:focus {
+      outline: none;
+    }
+    
+  
+  
+  
+    //  Menu Burger 1
+    &.dots {
+      &:after,
+      &:before,
+      span {
+        width: 10%;
+        height: 20%;
+        border-radius: 100px;
+        position: absolute;
+        left: 0px;
+        background: #F6A017;
+        transform: rotate(0deg);
+        transition: all 400ms;
+  
+        left: 1%;
+        right: 1%;
+        margin: 0 auto;
+  
+      }
+  
+      &:after,
+      &:before {
+        content:"";
+      }
+  
+      &:after {
+        top: -18%;
+        margin-top: 0px;
+        
+      }
+  
+      &:before {
+        bottom: -10%;
+        margin-bottom: 0px;
+      }
+  
+      span {
+        top: 50%;
+        margin-top: -2px;
+      }
+  
+      &.on {
+  
+        &:after {
+          transform: rotate(135deg) translate(9px,-9px);
+          width: 100%;
+        }
+  
+        &:before { 
+          transform: rotate(225deg);
+          bottom: 40%;
+          margin-bottom: -2px;
+          width: 100%;
+        }
+  
+        span {
+          transform: rotate(135deg);
+        }
+  
+      }
+    }
+  
+}
