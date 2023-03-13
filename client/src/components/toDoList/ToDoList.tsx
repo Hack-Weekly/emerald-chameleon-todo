@@ -99,36 +99,26 @@ const ToDoList = (props: ListProps) => {
 
   const addNewItem = () => {
     if (!newItem.description || !newItem.dueDate) return
-    // <<<<< Existing Code
-    // const newItemId = items.length + 1
-    // const newItemCategory = selectedCategories[0]
-    // const newItems = [
-    //   ...items,
-    //   {
-    //     id: newItemId,
-    //     priority: newItemId,
-    //     categoryId: newItemCategory.id,
-    //     description: newItem.description,
-    //     isDone: false,
-    //     dueDate: newItem.dueDate,
-    //   },
-    // ]
-    // setNewItem({ description: '', dueDate: '' })
-    // props.setItems(newItems)
-    // const newItems = [...items, newItem]
-    //  >>>>>>>>
 
+    const newItemId = items.length + 1
     const newItemCategory = selectedCategories[0]
-    const newItemToAdd = {
-      priority: ' ',
-      categoryId: newItemCategory.id,
-      description: newItem.description,
-      isDone: false,
-      dueDate: newItem.dueDate,
-    }
-
+    const newItems = [
+      ...items,
+      {
+        id: newItemId,
+        priority: newItemId,
+        categoryId: newItemCategory.id,
+        description: newItem.description,
+        isDone: false,
+        dueDate: newItem.dueDate,
+      },
+    ]
+    const newItemToAdd = newItems[1]
+    console.log(newItems)
+    setNewItem({ description: '', dueDate: '' })
+    props.setItems(newItems)
     postRequestForNewItem(newItemToAdd)
-    props.setItems([...items, newItemToAdd])
+
     setNewItem({ description: '', dueDate: '' })
 
     const newItemRef = ListItem.current[ListItem.current.length - 1]
@@ -146,7 +136,8 @@ const ToDoList = (props: ListProps) => {
   }
 
   const postRequestForNewItem = async (itemToAdd: object) => {
-    console.log(items)
+    console.log('items: ', items)
+    console.log('itemToAdd: ', itemToAdd)
     const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
     // 'https://todobackend20230309204702.azurewebsites.net/api/item'
     try {
