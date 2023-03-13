@@ -1,9 +1,20 @@
 .delete-button {
-  color: red;
+  color: #c93014;
   position: absolute;
   right: 1em;
   margin-top: 1.2em;
   background-color: transparent;
   border: 0;
   cursor: pointer;
+
+  img {
+    height: 1em;
+    transition: 0.3s;
+    position: absolute;
+    inset: 0;
+    &:hover {
+      height: 1.2em;
+      filter: invert(23%) sepia(87%) saturate(2674%) hue-rotate(356deg) brightness(82%) contrast(91%);
+    }
+  }
 }

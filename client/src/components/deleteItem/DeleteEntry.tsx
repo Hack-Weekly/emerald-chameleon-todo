@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import '../css/_deleteEntry.scss'
 
 interface Entry {
@@ -6,21 +7,23 @@ interface Entry {
 
 type DeleteEntryProps<T extends Entry> = {
   id: number
-  itemType: string
-  items: T[]
-  setItems: (value: T[]) => void
+  entryType: string
+  entries: T[]
+  setEntries: (value: T[]) => void
 }
 
 export function DeleteEntry<T extends Entry>(props: DeleteEntryProps<T>) {
-  const { id, itemType, items, setItems } = props
+  const { id, entryType, entries, setEntries } = props
   const url = 'https://todobackend20230309204702.azurewebsites.net/api'
+  const deleteRef = useRef(null)
 
   function deleteEntry() {
     try {
-      fetch(`${url}/${itemType}/${id}`, {
+      fetch(`${url}/${entryType}/${id}`, {
         method: 'DELETE',
       }).then(() => {
-        if (itemType === 'category') setItems(items.filter((item) => item.id !== id))
+        if (entryType === 'category')
+          setEntries(entries.filter((entry) => entry.id !== id))
       })
     } catch (err) {
       console.log(err)
@@ -31,9 +34,10 @@ export function DeleteEntry<T extends Entry>(props: DeleteEntryProps<T>) {
     <button
       className="delete-button"
       onClick={deleteEntry}
-      id={`delete-${itemType}-${id}`}
+      id={`delete-${entryType}-${id}`}
+      ref={deleteRef}
     >
-      X
+      <img src="/icons/trashcan.svg" className="trashcan" />
     </button>
   )
 }

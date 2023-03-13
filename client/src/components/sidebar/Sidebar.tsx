@@ -81,9 +81,9 @@ export default function Sidebar(props: SidebarProps) {
               </button>
               <DeleteEntry
                 id={cat.id}
-                itemType="category"
-                items={categories}
-                setItems={setCategories}
+                entryType="category"
+                entries={categories}
+                setEntries={setCategories}
               />
             </div>
           )
