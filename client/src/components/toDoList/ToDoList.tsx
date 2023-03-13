@@ -114,6 +114,9 @@ const ToDoList = (props: ListProps) => {
     //     dueDate: newItem.dueDate,
     //   },
     // ]
+    // setNewItem({ description: '', dueDate: '' })
+    // props.setItems(newItems)
+    // const newItems = [...items, newItem]
     //  >>>>>>>>
 
     const newItemCategory = selectedCategories[0]
@@ -128,8 +131,7 @@ const ToDoList = (props: ListProps) => {
     postRequestForNewItem(newItemToAdd)
     props.setItems([...items, newItemToAdd])
     setNewItem({ description: '', dueDate: '' })
-    // props.setItems(newItems)
-    // const newItems = [...items, newItem]
+
     const newItemRef = ListItem.current[ListItem.current.length - 1]
     if (newItemRef) {
       newItemRef.addEventListener('click', () => {
@@ -146,8 +148,8 @@ const ToDoList = (props: ListProps) => {
 
   const postRequestForNewItem = async (itemToAdd: object) => {
     console.log(items)
-    const toDoListUrl =
-      'https://todobackend20230309204702.azurewebsites.net/api/item'
+    const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
+      // 'https://todobackend20230309204702.azurewebsites.net/api/item'
     try {
       const response = await fetch(toDoListUrl, {
         method: 'POST',
@@ -186,7 +188,7 @@ const ToDoList = (props: ListProps) => {
         } else {
           return (
             <div
-              key={item.description}
+              key={item.id}
               className="listItem"
               // id={item.id.toString()}
               ref={(ref) => {
