@@ -1,17 +1,25 @@
 import type { Categories, Items } from '../../../types/data'
 import './_ToDoList.scss'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import PostToDoStatus from '../../functions/PostToDoStatus'
+import CreateToDo from '../createToDo/CreateToDo'
 
 interface ListProps {
   selectedCategories: Categories[]
   items: Items[]
+  setItems: React.Dispatch<React.SetStateAction<Items[]>>
+}
+
+interface NewItem {
+  description: string
+  dueDate: string
 }
 
 const ToDoList = (props: ListProps) => {
   const { selectedCategories, items } = props
   const ListItem = useRef<HTMLElement[]>([])
+  const [newItem, setNewItem] = useState<NewItem>({ description: '', dueDate: '' })
 
   const UpdateStatus = async (element: HTMLElement) => {
     const item = items.find((item) => {
@@ -80,20 +88,50 @@ const ToDoList = (props: ListProps) => {
     return `${test[1]}/${test[2]}/${test[0]}`
   }
 
+  // Add new list item
+  const handleNewDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewItem({ ...newItem, description: event.currentTarget.value })
+  }
+
+  const handleNewDueDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewItem({ ...newItem, dueDate: event.target.value })
+  }
+
+  const addNewItem = () => {
+    if (!newItem.description || !newItem.dueDate) return
+    const newItemId = items.length + 1
+    const newItemCategory = selectedCategories[0]
+    const newItems = [
+      ...items,
+      {
+        id: newItemId,
+        priority: newItemId,
+        categoryId: newItemCategory.id,
+        description: newItem.description,
+        isDone: false,
+        dueDate: newItem.dueDate,
+      },
+    ]
+    setNewItem({ description: '', dueDate: '' })
+    props.setItems(newItems)
+    // const newItems = [...items, newItem]
+    const newItemRef = ListItem.current[ListItem.current.length - 1]
+    if (newItemRef) {
+      newItemRef.addEventListener('click', () => {
+        if (newItemRef.getAttribute('class') === 'listItemClicked') {
+          HandleUndo(newItemRef)
+          return
+        } else {
+          HandleCrossOut(newItemRef)
+        }
+      })
+    }
+    setNewItem({ description: '', dueDate: '' })
+  }
+
   const Items = () => {
     const categoryElement = selectedCategories.map((category) => {
-      
-      // convert dueDate string to yyyymmdd format
-      const itemDatesStringToNumber = items.map((item) => {
-        const formattedDate = item.dueDate.slice(0, 10).split('-').join('')
-        return { ...item, formattedDate }
-      })
-
-      const sortedItemsByDueDate = itemDatesStringToNumber.sort(
-        (objA, objB) => Number(objA.formattedDate) - Number(objB.formattedDate)
-      )
-
-      const elements = sortedItemsByDueDate.map((item) => {
+      const elements = items.map((item) => {
         if (item.categoryId !== category.id) return
         if (item.isDone) {
           return (
@@ -133,6 +171,17 @@ const ToDoList = (props: ListProps) => {
           <div className="categoryHeaders">
             <h3 className="categorySubHeader">Task Name</h3>
             <h3 className="categorySubHeader">Due Date</h3>
+          </div>
+          <div className="toDoListContainer">
+            <div className="createToDo">
+              <CreateToDo
+                handleNewDescription={handleNewDescription}
+                handleNewDueDate={handleNewDueDate}
+                addNewItem={addNewItem}
+                description={newItem.description}
+                dueDate={newItem.dueDate}
+              />
+            </div>
           </div>
           {elements}
         </div>

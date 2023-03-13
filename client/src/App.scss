@@ -1,5 +1,21 @@
 @use './components/css/variables' as v;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  // for logo
+  width: 100%;
+}
+
+//Page Wrapper (App.tsx)
+.page-wrapper {
+  display: flex;
+}
+
 button {
   border-radius: v.$bradius;
 }
