@@ -21,7 +21,6 @@ const ToDoList = (props: ListProps) => {
   const ListItem = useRef<HTMLElement[]>([])
   const [newItem, setNewItem] = useState<NewItem>({ description: '', dueDate: '' })
 
-
   const UpdateStatus = async (element: HTMLElement) => {
     const item = items.find((item) => {
       const elementKey = element.getAttribute('id')
@@ -149,7 +148,7 @@ const ToDoList = (props: ListProps) => {
   const postRequestForNewItem = async (itemToAdd: object) => {
     console.log(items)
     const toDoListUrl = 'https://nas.lightshowdepot.com/api/item'
-      // 'https://todobackend20230309204702.azurewebsites.net/api/item'
+    // 'https://todobackend20230309204702.azurewebsites.net/api/item'
     try {
       const response = await fetch(toDoListUrl, {
         method: 'POST',
