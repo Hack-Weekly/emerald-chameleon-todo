@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import '../css/_addCategory.scss'
 import { Categories } from '../../../types/data'
+import { url } from 'inspector'
 
 type AddCategoryProps = {
   categories: Categories[]
@@ -19,8 +20,7 @@ const AddCategory = (props: AddCategoryProps) => {
 
   //navigating to https://todobackend20230309204702.azurewebsites.net/swagger/index.html will allow you to interrogate all the endpoints in the backend.
 
-  const categoryUrl =
-    'https://todobackend20230309204702.azurewebsites.net/api/category'
+  const categoryUrl = 'https://nas.lightshowdepot.com/api/category'
 
   // isClicked state changes when clicking on Add Category, Ok, or Cancel buttons
   const handleClick = () => {

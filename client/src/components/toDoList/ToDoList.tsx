@@ -120,7 +120,7 @@ const ToDoList = (props: ListProps) => {
     setNewItem({ description: '', dueDate: '' })
     props.setItems(newItems)
     const newItemWithoutId = {
-      priority: newItemId,
+      priority: newItemId.toString(),
       categoryId: newItemCategory.id,
       description: newItem.description,
       isDone: false,
@@ -173,7 +173,7 @@ const ToDoList = (props: ListProps) => {
           return (
             <div
               key={item.description}
-              // id={item.id.toString()}
+              //id={item.id.toString()}
               className="listItemClicked"
               ref={(ref) => {
                 if (ref === null) return

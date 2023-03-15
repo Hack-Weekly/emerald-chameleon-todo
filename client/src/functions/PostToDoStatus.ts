@@ -1,5 +1,5 @@
 import { Items } from '../../types/data'
-const url = 'https://todobackend20230309204702.azurewebsites.net/api/'
+const url = 'https://nas.lightshowdepot.com/api/'
 
 const PostToDoStatus = async (item: Items) => {
   const status = item.isDone
