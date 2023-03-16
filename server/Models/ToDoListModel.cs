@@ -31,7 +31,7 @@ namespace HackWeekly_ToDoList.Models
 
     public class Priority
     {
-        [Key] 
+        [Key]
         public int PId { get; set; }
         public string Description { get; set; }
     }

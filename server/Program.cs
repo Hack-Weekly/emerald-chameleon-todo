@@ -12,10 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //Add DB Connection
-var connectionString = builder.Configuration.GetConnectionString("HackWeekly");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(
-    builder.Configuration.GetConnectionString("HackWeekly"), ServerVersion.AutoDetect(connectionString)
-    ));
+//var connectionString = builder.Configuration.GetConnectionString("HackWeekly");
+//builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(
+//    builder.Configuration.GetConnectionString("HackWeekly"), ServerVersion.AutoDetect(connectionString)
+//    ));
+
+builder.Services.AddDbContext<AppDbContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=HackWeeklyP1.db"));// adds the dbcontext with a scoped lifetime
 
 builder.Services.AddCors();
 
